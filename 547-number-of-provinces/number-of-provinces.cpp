@@ -1,15 +1,18 @@
 class Solution {
 public:
 
-    void dfs_recur(int node,
-                   vector<vector<int>>& adj,
-                   vector<int>& vis) {
+    void dfs(int node,
+             vector<vector<int>>& isConnected,
+             vector<int>& vis) {
 
         vis[node] = 1;
 
-        for (auto it : adj[node]) {
-            if (!vis[it]) {
-                dfs_recur(it, adj, vis);
+        int n = isConnected.size();
+
+        for(int j = 0; j < n; j++) {
+
+            if(isConnected[node][j] == 1 && !vis[j]) {
+                dfs(j, isConnected, vis);
             }
         }
     }
@@ -18,28 +21,15 @@ public:
 
         int n = isConnected.size();
 
-        // Convert matrix to adjacency list
-        vector<vector<int>> adj(n);
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-
-                if (i != j && isConnected[i][j] == 1) {
-                    adj[i].push_back(j);
-                    adj[j].push_back(i);
-                }
-            }
-        }
-
-        vector<int> vis(n, 0);
+        vector<int> vis(n,0);
 
         int cnt = 0;
 
-        for (int i = 0; i < n; i++) {
+        for(int i=0;i<n;i++) {
 
-            if (!vis[i]) {
+            if(!vis[i]) {
                 cnt++;
-                dfs_recur(i, adj, vis);
+                dfs(i,isConnected,vis);
             }
         }
 
