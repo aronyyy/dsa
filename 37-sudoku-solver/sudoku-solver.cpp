@@ -29,33 +29,33 @@ public:
         return true;
     }
 
-    bool solve(vector<vector<char>>& board) {
-
-        for (int row = 0; row < 9; row++) {
-
-            for (int col = 0; col < 9; col++) {
-
-                if (board[row][col] == '.') {
-
-                    for (char ch = '1'; ch <= '9'; ch++) {
-
-                        if (isValid(board, row, col, ch)) {
-
-                            board[row][col] = ch;
-
-                            if (solve(board))
-                                return true;
-
-                            board[row][col] = '.';
-                        }
-                    }
-
-                    return false;
+    bool solve(vector<vector<char>>& board){
+        int row=-1;
+        int col=-1;
+        for(int i=0; i<9; i++){
+            for(int j=0; j<9; j++){
+                if (board[i][j] == '.'){
+                    row = i;
+                    col = j;
+                    break;
                 }
+
+            }
+            if (row!= -1) break;
+        }
+        if (row == -1) return true;
+
+        for (int k=1; k<=9; k++){
+            char ch = '0' + k;
+            if (isValid(board, row, col, ch)){
+                board[row][col] = ch;
+                if (solve(board)){
+                    return true;
+                }
+                board[row][col] = '.';
             }
         }
-
-        return true;
+        return false;
     }
 
     void solveSudoku(vector<vector<char>>& board) {
